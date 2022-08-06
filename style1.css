@@ -1,0 +1,103 @@
+body {
+    font-family: 'Open Sans', sans-serif;
+    margin: 10px auto; }
+  
+  @media (min-width: 50em) {
+    body {
+      width: 95%; } }
+  @media (min-width: 75em) {
+    body {
+      width: 95%; } }
+  @media (max-width: 50em) {
+    body {
+      width: 100%; }
+  
+    .navbar {
+      text-align: center;
+      text-align: center; }
+  
+    .logo-img {
+      margin: 25px 0 0 0 !important;
+      position: relative !important;
+      width: 200px !important; }
+  
+    .navbar #thesinput {
+      font-size: 2em !important;
+      width: calc(100% - 50px) !important;
+      margin: 20px 32px 0 30px !important; }
+  
+    .def-box {
+      margin: 5px 10px 5px 10px !important;
+     }
+  
+    .thesaurus_results br {
+      content: "";
+      margin: 0.8em;
+      display: block;
+    }
+  
+    .thes_defs {
+      font-size: 1.0em;
+      margin-left: 0.2em;
+    }
+  
+    .thes_usage {
+      font-size: 0.8em;
+    }
+  
+    .thes_usage_cluster {
+      color: blue !important;
+    }
+  
+    .thes_defs br {
+      content: "";
+      display: block;
+    }
+  
+    .filterpane {
+      padding-top: 5px;
+    }
+  
+  }
+  
+  table {
+    table-layout: fixed;
+  }
+  
+  a {
+    text-decoration: none;
+    color: darkblue; }
+  
+  a:hover {
+    color: purple; }
+  
+  .navbar {
+    min-height: 70px;
+    position: relative; }
+  
+  .logo-img {
+      margin: 25px 0 20px 0 !important;
+      position: relative !important;
+      width: 200px !important; }
+  
+  .navbar #thesinput {
+    float: center;
+    display: block;
+    background: #f4fff4;
+    border: 0px;
+    width: calc(100% - 300px);
+    margin: 10px 0 0 40px;
+    padding: 3px 10px 5px 10px;
+    border: 1px solid #999;
+    font-size: 2em; }
+  
+  .navbar input, .navbar select, .navbar textarea {
+    color: black;
+    outline: none; }
+  
+  .navbar textarea:focus, .navbar input:focus {
+    color: black;
+    outline: none;
+    background: #e8e8e8; }
+  
+ 

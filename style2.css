@@ -1,0 +1,135 @@
+ .filterpane {
+    display: none;
+    color: #000;
+    margin: auto;
+    padding-bottom: 15px;
+    padding-top: 15px;
+  }
+
+  .filtertitle {
+    font-size: 12px;
+    cursor: pointer;
+    display: block;
+    color: #666;
+  }
+
+  #filteroptions {
+    display: none;
+  }
+
+  .inactivefilter {
+    color: #000000;
+    width: 140px;
+    margin: 3px;
+  }
+
+  .activefilter {
+    color: #0000ff;
+    font-weight: bold;
+    width: 140px;
+    margin: 3px;
+    background: #bbffbb;
+  }
+
+  .filterbreak {
+    clear: both;
+  }
+
+  .nonefound {
+    color: #ff0000;
+  }
+
+  .nextlink {
+    font-size: 14px;
+    margin-top: 20px;
+    float: right;
+    cursor: pointer;
+    color: #0000ee;
+    padding: 5px;
+  }
+  
+  .prevlink {
+    font-size: 14px;
+    margin-top: 20px;
+    margin-right: 2px;
+    float: left;
+    cursor: pointer;
+    color: #0000ee;
+    padding: 5px;
+  }
+  
+  @media screen and (max-width: 500px) {
+  .inactivefilter {
+      width: 140px;
+  }
+
+  .activefilter {
+      width: 140px;
+  }
+  }
+  
+  .heading {
+    color: hsl(220,45%,50%);
+  }
+
+  .thesaurus_results {
+    position: relative;
+    left:-10px;
+  }
+
+  .resnum {
+    font-size: 10px;
+    text-align: right;
+    vertical-align: middle;
+    color: #aaaaaa;
+    width: 20px;
+    display: inline-block;
+  }
+
+  .ressyn {
+    background: #ffffbb;
+  }
+
+  .resant {
+    background: #ffdddd;
+  }
+
+  .res {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    transition: 0.2s ease all;
+    width: calc(100% - 30px);
+    vertical-align: top;
+  }
+
+  .query-res {
+    color: green;
+    font-size: .9em;
+    display: inline;
+    padding: 3px;
+    border-color: lightgreen;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 5px;
+  }
+
+  .query-res-spacer {
+    display: block;
+    margin-top: 5px;
+  }
+
+  .ressyn a {
+    text-decoration: none;
+  }
+
+  .res a {
+    text-decoration: none;
+    color: darkblue;
+  }
+
+  .res:hover {
+    color: #ff0000;
+  }
+  
+ 

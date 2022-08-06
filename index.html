@@ -1,0 +1,325 @@
+
+<html>
+    <head>
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+    <link rel="shortcut icon" type="image/png" href="/android-chrome-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/thesaurus_manifest.json">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css" />
+    <!-- <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.min.css" /> -->
+    <link rel="stylesheet" href="style1.css" />
+    <!-- <link rel="stylesheet" href="style2.css" /> -->
+    
+    <meta name=keywords content="thesaurus synonyms meanings word finder search for words antonyms related similar words">
+    <title>Word Hunt</title>
+    <meta name=description content="A powerful English thesaurus and brainstorming tool that lets you describe what you're looking for in plain terms. It gives you hundreds of related words to choose from and lets you narrow down the list with several advanced features.">
+    
+    </head>
+    <body>
+        <div class="shadow-box">
+        <center>
+        <div class="navbar">
+        
+        <div id="logo" class="wh-logo-2"><a href="/wordhunt/"><img class="logo-img" src="images/logo.jpg"></a></div>  
+        
+        <h1 style="color: red; font: 5em sans-serif;">Word Hunt</h1>
+        <!-- link aane ke baad theek krna hai -->
+        
+        
+        <input type="search" id="thesinput" name="w" placeholder="" onblur="thesInputBlur(this)" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+        
+        </div>
+        </center>
+
+        <div id="defbox" class="def-box"></div>
+        <center>
+        
+        <span id="rerank">
+        <select id="sortOrderControl" name="sortOrderControl">
+        
+            <option value = "rv1" selected> Closest meaning first</option>
+            <option value = "al0"> A &rarr; Z </option>
+            <option value = "al1"> Z &rarr; A </option>
+            <option value = "mo1" title="Order words by what year they were used, on average, in literature (most recent first)."> Most modern </option>
+            <option value = "mo0" title="Order words by what year they were used, on average, in literature (oldest first)."> Most old-fashioned </option>
+            <option value = "lg1" title="Order words by how much likelier they are to appear in legal documents."> Most formal (legal)</option>
+            <option value = "ly1" title="Order words by how much likelier they are to appear in song lyrics and poetry."> Most lyrical</option> 
+        </select>
+        </span>
+        
+        <span id="filtertitle" onClick="toggleFilters(1);" class="filtertitle">
+            <span><button id="filterbutton">Advanced filters</button></span>
+        </span>
+        <span id="vizspan" class="filterinnertitle"></span>
+
+        </center>
+        
+        <center>
+            <div id="filterpane" class="filterpane">
+                <div id="filteroptions">
+                    <input type="search" class="inactivefilter filterbreak" id="filter_startswith" value="Starts with..." onfocus="inputFocus(this)" onblur="inputBlur(this, 'Starts with')"></input>
+                    <input type="search" class="inactivefilter filterbreak" pattern="[0-9\+]*" id="filter_numberofletters" onkeypress='return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 43' value="Letter count..." onfocus="inputFocus(this)" onblur="inputBlur(this, 'Letters')"></input>
+                    <input type="search" class="inactivefilter filterbreak" id="filter_relatedto" value="Also related to..." onfocus="inputFocus(this)" onblur="inputBlur(this, 'Related to')"></input>
+                    <!-- <input type="search" class="inactivefilter filterbreak" id="filter_rhymeswith" value="Rhymes with..." onfocus="inputFocus(this)" onblur="inputBlur(this, 'Rhymes with')"></input> -->
+                    <input type="search" class="inactivefilter filterbreak" id="filter_soundslike" value="Sounds like..." onfocus="inputFocus(this)" onblur="inputBlur(this, 'Sounds like')"></input>
+                    <!-- <input type="search" class="inactivefilter" id="filter_vowelslike" value="Primary vowel..." onfocus="inputFocus(this)" onblur="inputBlur(this, 'Primary vowel')"></input> -->
+                    <!-- <input type="search" class="inactivefilter" id="filter_stresspattern" onkeypress='return event.charCode == 48 || event.charCode == 49 || event.charCode == 120 || event.charCode == 88 || event.charCode == 47' pattern="[01Xx/]*" value="Meter..." onfocus="inputFocus(this)" onblur="inputBlur(this, 'Meter')"></input> -->
+                    <input type="search" class="inactivefilter filterbreak" pattern="[0-9]*" id="filter_numberofsyllables" onkeypress='return event.charCode >= 48 && event.charCode <= 57' value="Syllable count..." onfocus="inputFocus(this)" onblur="inputBlur(this, 'Syllables')"></input>
+                </div>
+            </div>
+            
+            <div id="helpline1" class="helpline">
+            
+            Enter a word, phrase, description, or pattern above to find synonyms,
+            related words, and much more.<br>
+            Click <button id="help_btn" onclick="showDocs()">Help</button> for more info.<br><br>
+            
+            <div id="example_queries">
+                Examples:&nbsp;&nbsp;&nbsp;&nbsp;
+                [&nbsp;<a href="?loc=revfp&s=joyful">joyful</a>&nbsp;]&nbsp;&nbsp;&nbsp;
+                [&nbsp;<a href="?loc=revfp&s=small+amount">small&nbsp;amount</a>&nbsp;]&nbsp;&nbsp;&nbsp;
+                [&nbsp;<a href="?loc=revfp&s=urge%20to%20travel">urge&nbsp;to&nbsp;travel</a>&nbsp;] &nbsp;&nbsp;&nbsp;
+                [&nbsp;<a href="?s=someone%20who%20believes%20in%20god">someone&nbsp;who&nbsp;believes&nbsp;in&nbsp;god</a>&nbsp;] &nbsp;&nbsp;&nbsp;
+                [&nbsp;<a href="?loc=revfp&s=%3F%3Flon%3Asynthetic%20fabric"><nobr>&quest;&quest;lon:synthetic&nbsp;fabric</nobr></a>&nbsp;]&nbsp;&nbsp;&nbsp;
+                [&nbsp;<a href="?s=s*%3Awinter%20sport">s*:winter&nbsp;sport</a>&nbsp;]&nbsp;&nbsp;&nbsp;
+                
+            </div>
+            
+        </center>
+        
+        <div id="results">
+            <ul id="tabs"></ul>
+                <div id="content" class="thesaurus-content"> 
+                </div>
+        </div>
+        
+        <div id="clusterbox" class="def-box"></div>
+        
+        <noscript>
+            <div id="needs_javascript">
+
+                <center>
+                    <b>Note: Requires JavaScript.</b>
+                    <br>
+                    <img src="/img/a.gif?q=omg_a_user_without_js"> If you have disabled JavaScript
+                    in your browser, please <a href="https://enable-javascript.com/">re-enable it for this site</a>.<br>
+                </center>
+            </div>
+        </noscript>
+        
+        <center><br>
+        <div class="footnote">
+        
+        
+        <button id="help_btn" onclick="showDocs()">Help</button>
+        <button onclick="location.href='/'" type="button">About Us</button>
+        <button onclick="location.href='/?c=about&sel=olthes#feedback'" type="button">Feedback</button>
+        
+        <br>
+        
+        <br>
+        <div id="olthes_try_old"></div>
+        
+        </div>
+        <br><br></center>
+        
+        <script>
+            function showDocs() {
+            var x = document.getElementById("thes_doc");
+            x.style.display = "block";
+            $("#olthes_intro_text").show();
+            }
+            
+            function showOrHideDocs() {
+                var x = document.getElementById("thes_doc");
+                if (x.style.display === "none") {
+                    x.style.display = "block";
+                } else {
+                    x.style.display = "none";
+                }
+                var y = document.getElementById("help_btn");
+                if (y.style.display === "none") {
+                    y.style.display = "block";
+                } else {
+                    y.style.display = "none";
+                }
+            }
+            
+            var THESAURUS_MAX_ITEMS_PER_PAGE = 100;
+            var THESAURUS_MAX_COLUMNS = 3;
+            var THESAURUS_BASE_URL = "?s=";
+            // var THESAURUS_API_URL = "//api.onelook.com";
+            var THESAURUS_FALLBACK_URL = "/?w=*&loc=revfp_legacy&loc2=apifail&clue=";
+            var THESAURUS_FALLBACK_MSG = "";
+            var THESAURUS_SUPPRESS_BASE_HELPLINE = true;
+            
+            var THESAURUS_QUICKLINK_TEMPLATE = '<b><a href="/?loc=olthes1&w=%s"><button class="ql_btn">Definitions</button></a></b><br>' +
+                '<a href="?s=%s"><button class="ql_btn">Related</button></a><br>' +
+                '<a href="https://en.wikipedia.org/wiki/%s"><button class="ql_btn">Wikipedia</button></a><br>' +    
+                '<a href="https://www.google.com/search?q=%s"><button class="ql_btn">Google</button></a><br>' +
+                '<a href="?s=type%20of%20%s"><button class="ql_btn">Types&nbsp;of...</button></a><br>' +
+                '<a href="?s=rhymes%20of%20%s"><button class="ql_btn">Rhymes</button></a><br>' +
+                '<a href="%o"><button title="Re-sort the list of results based on how similar they are to this word." class="ql_btn"><b>Re-sort results</b></button></a>';
+            
+            var THESAURUS_QUICKLINK_TEMPLATE_NO_DEFS = THESAURUS_QUICKLINK_TEMPLATE;
+            var THESAURUS_RELATED_TEMPLATE = '?s=%s';
+            var THESAURUS_CLICKABLE_ENTRIES = false;
+            var submitted = false;
+            
+            function refreshThes() {
+                var params = getUrlVars();
+                var s = params['s'];
+                if (typeof s === 'undefined') {
+                    s = "";
+                }
+                full_api_query = getApiUrl(s, false);
+            
+                if (window.location.href.match(/\/tesauro/)) {
+                    // Why is this needed?
+                    requested_lang = "es";
+                full_api_query = getApiUrl(s, false);
+                }
+            
+                thesInit('s');
+                if (s === "") {
+                    $("#olthes_intro_text").show();
+                }
+                if (s === "" || !is_touch_device()) {
+                    $("#thesinput").focus();
+                    $("#thesinput").select();
+                } else {
+                    $("#thesinput").blur();
+                }
+            }
+            
+            $(function() {
+            
+                // Register service worker
+                if ('serviceWorker' in navigator) {
+                    window.addEventListener('load', function() {
+                        navigator.serviceWorker.register('/thesaurus/sw.js').then(function(registration) {
+                        }, function(err) {
+                        });
+                    });
+                };
+            
+                $("#thes_doc").css("display", "none");
+                $("#filtertitle").hide(); 
+                $("#content").hide(); // Hide all content
+                $( "#thesinput" ).autocomplete({
+                        minLength: 3,
+                        delay: 200,
+                        open: function(event, ui) {
+                                $('.ui-autocomplete').off('menufocus mouseover hover mouseenter');
+                        },
+                        select: function(event, ui) {
+                            if (ui.item.value.match("Hit Enter")) {
+                            ui.item.value = $( "#thesinput").val();
+                            return;
+                            }
+                            $( "#thesinput" ).val(ui.item.value);
+                            filter_term = ui.item.value;
+                            full_api_query = getApiUrl(filter_term, false);
+                            // full_api_query += "&loc=olac";
+                            $( "#thesinput" ).autocomplete( "close" );
+                            getResults(true);
+                            if (!is_touch_device()) {
+                                $("#thesinput").focus();
+                                $("#thesinput").select();
+                            } else {
+                                $("#thesinput").blur();
+                            }
+                        },
+                        source: function( request, response ) {
+                            $.ajax({
+                                    dataType: "json",
+                                        type : 'Get',
+                                        url: getApiUrl(request.term, true),
+                                        success: function(data) {
+                                        var s = "";
+                                        data.push({"word": "Hit Enter to submit your query or select a word above." + s});
+                            if (!submitted) {
+                            response( $.map( data, function(item) { return item["word"]; })) };
+                                            },
+                                        });
+                        }
+                    });
+            
+                $("#thesinput").keypress(function(e) {
+                        if(e.keyCode == 13)
+                            {
+                                submitted = true;
+                                filter_term = $("#thesinput").val();
+                                full_api_query = getApiUrl(filter_term, false);
+                                e.preventDefault();
+                                getResults(true);
+                                if (!is_touch_device()) {
+                                    $("#thesinput").focus();
+                                    $("#thesinput").select();
+                                } else {
+                                    $("#thesinput").blur();
+                                }
+                                $( "#thesinput" ).autocomplete( "close" );
+                            } else {
+                                submitted = false;
+                            }
+                    });
+            
+                var mq = window.matchMedia( "(max-width: 25em)" );
+                var mq2 = window.matchMedia( "(max-width: 40em)" );
+                var mq3 = window.matchMedia( "(max-width: 70em)" );
+                if (mq.matches) {
+                    THESAURUS_MAX_COLUMNS = 1;
+                    $("#thesinput").attr('placeholder', 'Word or description');
+                } else if (mq2.matches) {
+                    THESAURUS_MAX_COLUMNS = 2;
+                    THESAURUS_MAX_ITEMS_PER_PAGE = 50;
+                } else if (mq3.matches) {
+                    THESAURUS_MAX_COLUMNS = 4;
+                    THESAURUS_MAX_ITEMS_PER_PAGE = 80;
+                } else {
+                    THESAURUS_MAX_COLUMNS = 5;
+                    THESAURUS_MAX_ITEMS_PER_PAGE = 100;
+                }
+            
+            refreshThes();
+            if  ($(location).prop('hash') == "#patterns") {
+                showDocs();
+            }
+            
+            window.addEventListener('popstate', function() {refreshThes();});
+            });
+        </script>
+
+        <script src="wordhunt.js"></script>
+
+        <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+            
+            ga('create', 'UA-97216365-1', 'auto');
+            ga('send', 'pageview');
+        </script>
+    </body>
+</html>
