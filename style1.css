@@ -101,3 +101,31 @@ body {
     background: #e8e8e8; }
   
  
+
+    .footer {
+        text-align: center;
+        padding: 30px 0 15px 0;
+        font-size: .8em; }
+      
+      #thesaurus_ants {
+        padding-left: 10px;
+        display: none;
+      }
+      
+      .shadow-box {
+      @media (min-width: 30em) {
+        -webkit-box-shadow: 0 0 10px 5px #c9c9f0;
+        -moz-box-shadow: 0 0 10px 5px #c9c9f0;
+        box-shadow: 0 0 10px 5px #c9c9f0;
+      }
+        border: 1px solid #999;
+        padding: 10px;
+      }
+
+      .inactivefilter {
+        width: 120px;
+        color: #888;
+      }
+      .activefilter {
+        width: 120px;
+      }
