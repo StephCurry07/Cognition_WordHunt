@@ -45,7 +45,7 @@
         <h1 style="color: red; font: 5em sans-serif;">Word Hunt</h1>
         
         
-        <input type="search" id="thesinput" size=100 name="w" placeholder="" onblur="thesInputBlur(this)" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+        <input type="text" id="thesinput" size=100 name="w" placeholder="Enter" onblur="thesInputBlur(this)" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" onkeypress= "populate()">
         
         </div>
         </center>
@@ -91,7 +91,7 @@
             
             Enter a word, phrase, description, or pattern above to find synonyms,
             related words, and much more.<br>
-            Click <button id="help_btn" class="btn btn-outline-info" onclick="showDocs()">Help</button> for more info.<br><br>
+            Click <button id="help_btn" class="btn btn-outline-info" onclick="showOrHideDocs()">Help</button> for more info.<br><br>
             
             <div id="example_queries">
                 Examples:&nbsp;&nbsp;&nbsp;&nbsp;
@@ -119,12 +119,12 @@
             
             <center>
             <table bgcolor=#339966 border=0 cellspacing=0 align="center">
-            <tr><td> <table bgcolor=ffffff cellpadding=10 cellspacing=0 border=0>
+            <tr><td> <table bgcolor=#9C9EFE cellpadding=10 cellspacing=0 border=0>
             <tr><td>
             <b><center>Task</center></b></TD><TD><b><center>Example searches</center></b></TD></TR>
             <TR><TD>&#183; Find a word by describing it</TD> 
             <TD>
-            <A HREF=https://stephcurry07.github.io/Cognition_WordHunt/?loc=revfp&s=barrel%20maker>barrel maker</A><br>
+            <A HREF='https://api.datamuse.com/words?ml=barrel+maker'>barrel maker</A><br>
             <A HREF=/Cognition/?loc=revfp&s=before%20the%20flood>before the flood</A><br>
             <A HREF=/thesaurus/?loc=revfp&s=museum%20guide>museum guide</A><br>
             <A HREF=/thesaurus/?loc=revfp&s=search%20for%20food>search for food</A><br>
@@ -278,10 +278,8 @@
             after 24 hours and we do not retain any long-term information about your
             IP address.
             
-            <h4>Who's behind this site and where can I send my <A HREF=/thesaurus/?loc=revfp&s=comments%20and%20complaints><strike>comments and complaints</strike></A> feedback?</h4>
-            
             WordHunt is a service of <a href="https://www.datamuse.com/">Datamuse</a>.
-            You can send us feedback <A HREF="/?c=about&sel=olthes#feedback">here</A>.<br><br>
+            You can send us feedback <A HREF="idx.html">here</A>.<br><br>
             </div>
             </div>
             </div>
@@ -307,24 +305,73 @@
             </div>
         </noscript>
         
+        <section>
+
+        </section>
+
+
+        <!-- document.getElementById("demo").innerHTML = obj.name + ", " + obj.age; -->
         <center><br>
+
         <div class="footnote">
         
-        <button type="button" class="btn btn-outline-info" id="help_btn" onclick="showDocs()">Help</button>
-        <button class="btn btn-outline-info" onclick="location.href='/'">About Us</button>
-        <button class="btn btn-outline-info" onclick="location.href='/?c=about&sel=olthes#feedback'">Feedback</button>
+        <button type="button" class="btn btn-outline-info" id="help_btn" onclick="showOrHideDocs()">Help</button>
+        <button class="btn btn-outline-info" onclick="showAboutUs()">About Us</button>
+        <div id="about-us" >
+            <h4>ABOUT us:</h4>
+            Our team members are third year students studying in VIT Vellore, branch: CSE with IoT. <br>
+            Team member 1: Apoorv Gupta <br>
+            Team member 2: Shreya Gupta <br>
+            For more info about us feel free to contact the team leader<br>
+            Ph:9890673668<h4>ABOUT our site:</h4>
+            Our site aims at improving vocabulary skills among the youth. We want to incite inquizitiveness among people .
+        </div>
+        <a href="idx.html" style="text-decoration: none;"><button class="btn btn-outline-info">Feedback</button></a>
         
         <br>
         <br>
     </center>
-        
+        <script>
+        async function populate() {
+                let relatedWord = document.getElementById('thesinput');
+                const requestURL = 'https://api.datamuse.com/words?ml=' + relatedWord.value;
+                const request = new Request(requestURL);
+
+                const response = await fetch(request);
+                const superHeroes = await response.json();
+                console.log(superHeroes[0]);
+                populateHeroes(superHeroes);
+            }
+
+        function populateHeroes(obj) {
+            const section = document.querySelector('section');
+            const maxRelatedWordDistance = 10;
+            const myArticle = document.createElement('article');
+            var myH2;
+            for(let i = 0; i < maxRelatedWordDistance;i++){
+                myH2 = document.createElement('h2');
+                myH2.textContent = `${obj[i]['word']}`;
+            }
+                myArticle.appendChild(myH2);
+                section.appendChild(myArticle);
+            }
+        </script>
         <script>
             function showDocs() {
-            var x = document.getElementById("thes_doc");
-            x.style.display = "block";
-            $("#olthes_intro_text").show();
+                var x = document.getElementById("thes_doc");
+                x.style.display = "block";
+                $("#olthes_intro_text").show();
             }
-            
+            function showAboutUs() {
+                var x = document.getElementById("about-us");
+                // x.style.display = "block";
+                // $("#olthes_intro_text").show();
+                if (x.style.display === "none") {
+                    x.style.display = "block";
+                } else {
+                    x.style.display = "none";
+                }
+            }
             function showOrHideDocs() {
                 var x = document.getElementById("thes_doc");
                 if (x.style.display === "none") {
@@ -340,13 +387,13 @@
                 }
             }
             
-            var THESAURUS_MAX_ITEMS_PER_PAGE = 100;
-            var THESAURUS_MAX_COLUMNS = 3;
-            var THESAURUS_BASE_URL = "?s=";
-            var THESAURUS_API_URL = "//api.onelook.com";
-            var THESAURUS_FALLBACK_URL = "/?w=*&loc=revfp_legacy&loc2=apifail&clue=";
-            var THESAURUS_FALLBACK_MSG = "";
-            var THESAURUS_SUPPRESS_BASE_HELPLINE = true;
+            // var THESAURUS_MAX_ITEMS_PER_PAGE = 100;
+            // var THESAURUS_MAX_COLUMNS = 3;
+            // var THESAURUS_BASE_URL = "?s=";
+            // var THESAURUS_API_URL = "//api.onelook.com";
+            // var THESAURUS_FALLBACK_URL = "/?w=*&loc=revfp_legacy&loc2=apifail&clue=";
+            // var THESAURUS_FALLBACK_MSG = "";
+            // var THESAURUS_SUPPRESS_BASE_HELPLINE = true;
             
             var THESAURUS_QUICKLINK_TEMPLATE = '<b><a href="/?loc=olthes1&w=%s"><button class="ql_btn btn btn-outline-info ">Definitions</button></a></b><br>' +
                 '<a href="?s=%s"><button class="ql_btn">Related</button></a><br>' +
@@ -356,134 +403,134 @@
                 '<a href="?s=rhymes%20of%20%s"><button class="ql_btn">Rhymes</button></a><br>' +
                 '<a href="%o"><button title="Re-sort the list of results based on how similar they are to this word." class="ql_btn"><b>Re-sort results</b></button></a>';
             
-            var THESAURUS_QUICKLINK_TEMPLATE_NO_DEFS = THESAURUS_QUICKLINK_TEMPLATE;
-            var THESAURUS_RELATED_TEMPLATE = '?s=%s';
-            var THESAURUS_CLICKABLE_ENTRIES = false;
-            var submitted = false;
+            // var THESAURUS_QUICKLINK_TEMPLATE_NO_DEFS = THESAURUS_QUICKLINK_TEMPLATE;
+            // var THESAURUS_RELATED_TEMPLATE = '?s=%s';
+            // var THESAURUS_CLICKABLE_ENTRIES = false;
+            // var submitted = false;
             
-            function refreshThes() {
-                var params = getUrlVars();
-                var s = params['s'];
-                if (typeof s === 'undefined') {
-                    s = "";
-                }
-                full_api_query = getApiUrl(s, false);
+            // function refreshThes() {
+            //     var params = getUrlVars();
+            //     var s = params['s'];
+            //     if (typeof s === 'undefined') {
+            //         s = "";
+            //     }
+            //     full_api_query = getApiUrl(s, false);
             
-                if (window.location.href.match(/\/tesauro/)) {
-                    // Why is this needed?
-                    requested_lang = "es";
-                full_api_query = getApiUrl(s, false);
-                }
+            //     if (window.location.href.match(/\/tesauro/)) {
+            //         // Why is this needed?
+            //         requested_lang = "es";
+            //     full_api_query = getApiUrl(s, false);
+            //     }
             
-                thesInit('s');
-                if (s === "") {
-                    $("#olthes_intro_text").show();
-                }
-                if (s === "" || !is_touch_device()) {
-                    $("#thesinput").focus();
-                    $("#thesinput").select();
-                } else {
-                    $("#thesinput").blur();
-                }
-            }
+            //     thesInit('s');
+            //     if (s === "") {
+            //         $("#olthes_intro_text").show();
+            //     }
+            //     if (s === "" || !is_touch_device()) {
+            //         $("#thesinput").focus();
+            //         $("#thesinput").select();
+            //     } else {
+            //         $("#thesinput").blur();
+            //     }
+            // }
             
-            $(function() {
+            // $(function() {
             
-                // Register service worker
-                if ('serviceWorker' in navigator) {
-                    window.addEventListener('load', function() {
-                        navigator.serviceWorker.register('/thesaurus/sw.js').then(function(registration) {
-                        }, function(err) {
-                        });
-                    });
-                };
+            //     // Register service worker
+            //     if ('serviceWorker' in navigator) {
+            //         window.addEventListener('load', function() {
+            //             navigator.serviceWorker.register('/thesaurus/sw.js').then(function(registration) {
+            //             }, function(err) {
+            //             });
+            //         });
+            //     };
             
-                $("#thes_doc").css("display", "none");
-                $("#filtertitle").hide(); 
-                $("#content").hide(); // Hide all content
-                $( "#thesinput" ).autocomplete({
-                        minLength: 3,
-                        delay: 200,
-                        open: function(event, ui) {
-                                $('.ui-autocomplete').off('menufocus mouseover hover mouseenter');
-                        },
-                        select: function(event, ui) {
-                            if (ui.item.value.match("Hit Enter")) {
-                            ui.item.value = $( "#thesinput").val();
-                            return;
-                            }
-                            $( "#thesinput" ).val(ui.item.value);
-                            filter_term = ui.item.value;
-                            full_api_query = getApiUrl(filter_term, false);
-                            // full_api_query += "&loc=olac";
-                            $( "#thesinput" ).autocomplete( "close" );
-                            getResults(true);
-                            if (!is_touch_device()) {
-                                $("#thesinput").focus();
-                                $("#thesinput").select();
-                            } else {
-                                $("#thesinput").blur();
-                            }
-                        },
-                        source: function( request, response ) {
-                            $.ajax({
-                                    dataType: "json",
-                                        type : 'Get',
-                                        url: getApiUrl(request.term, true),
-                                        success: function(data) {
-                                        var s = "";
-                                        data.push({"word": "Hit Enter to submit your query or select a word above." + s});
-                            if (!submitted) {
-                            response( $.map( data, function(item) { return item["word"]; })) };
-                                            },
-                                        });
-                        }
-                    });
+            //     $("#thes_doc").css("display", "none");
+            //     $("#filtertitle").hide(); 
+            //     $("#content").hide(); // Hide all content
+            //     $( "#thesinput" ).autocomplete({
+            //             minLength: 3,
+            //             delay: 200,
+            //             open: function(event, ui) {
+            //                     $('.ui-autocomplete').off('menufocus mouseover hover mouseenter');
+            //             },
+            //             select: function(event, ui) {
+            //                 if (ui.item.value.match("Hit Enter")) {
+            //                 ui.item.value = $( "#thesinput").val();
+            //                 return;
+            //                 }
+            //                 $( "#thesinput" ).val(ui.item.value);
+            //                 filter_term = ui.item.value;
+            //                 full_api_query = getApiUrl(filter_term, false);
+            //                 // full_api_query += "&loc=olac";
+            //                 $( "#thesinput" ).autocomplete( "close" );
+            //                 getResults(true);
+            //                 if (!is_touch_device()) {
+            //                     $("#thesinput").focus();
+            //                     $("#thesinput").select();
+            //                 } else {
+            //                     $("#thesinput").blur();
+            //                 }
+            //             },
+            //             source: function( request, response ) {
+            //                 $.ajax({
+            //                         dataType: "json",
+            //                             type : 'Get',
+            //                             url: getApiUrl(request.term, true),
+            //                             success: function(data) {
+            //                             var s = "";
+            //                             data.push({"word": "Hit Enter to submit your query or select a word above." + s});
+            //                 if (!submitted) {
+            //                 response( $.map( data, function(item) { return item["word"]; })) };
+            //                                 },
+            //                             });
+            //             }
+            //         });
             
-                $("#thesinput").keypress(function(e) {
-                        if(e.keyCode == 13)
-                            {
-                                submitted = true;
-                                filter_term = $("#thesinput").val();
-                                full_api_query = getApiUrl(filter_term, false);
-                                e.preventDefault();
-                                getResults(true);
-                                if (!is_touch_device()) {
-                                    $("#thesinput").focus();
-                                    $("#thesinput").select();
-                                } else {
-                                    $("#thesinput").blur();
-                                }
-                                $( "#thesinput" ).autocomplete( "close" );
-                            } else {
-                                submitted = false;
-                            }
-                    });
+                // $("#thesinput").keypress(function(e) {
+                //         if(e.keyCode == 13)
+                //             {
+                //                 submitted = true;
+                //                 filter_term = $("#thesinput").val();
+                //                 full_api_query = getApiUrl(filter_term, false);
+                //                 e.preventDefault();
+                //                 getResults(true);
+                //                 if (!is_touch_device()) {
+                //                     $("#thesinput").focus();
+                //                     $("#thesinput").select();
+                //                 } else {
+                //                     $("#thesinput").blur();
+                //                 }
+                //                 $( "#thesinput" ).autocomplete( "close" );
+                //             } else {
+                //                 submitted = false;
+                //             }
+                //     });
             
-                var mq = window.matchMedia( "(max-width: 25em)" );
-                var mq2 = window.matchMedia( "(max-width: 40em)" );
-                var mq3 = window.matchMedia( "(max-width: 70em)" );
-                if (mq.matches) {
-                    THESAURUS_MAX_COLUMNS = 1;
-                    $("#thesinput").attr('placeholder', 'Word or description');
-                } else if (mq2.matches) {
-                    THESAURUS_MAX_COLUMNS = 2;
-                    THESAURUS_MAX_ITEMS_PER_PAGE = 50;
-                } else if (mq3.matches) {
-                    THESAURUS_MAX_COLUMNS = 4;
-                    THESAURUS_MAX_ITEMS_PER_PAGE = 80;
-                } else {
-                    THESAURUS_MAX_COLUMNS = 5;
-                    THESAURUS_MAX_ITEMS_PER_PAGE = 100;
-                }
+            //     var mq = window.matchMedia( "(max-width: 25em)" );
+            //     var mq2 = window.matchMedia( "(max-width: 40em)" );
+            //     var mq3 = window.matchMedia( "(max-width: 70em)" );
+            //     if (mq.matches) {
+            //         THESAURUS_MAX_COLUMNS = 1;
+            //         $("#thesinput").attr('placeholder', 'Word or description');
+            //     } else if (mq2.matches) {
+            //         THESAURUS_MAX_COLUMNS = 2;
+            //         THESAURUS_MAX_ITEMS_PER_PAGE = 50;
+            //     } else if (mq3.matches) {
+            //         THESAURUS_MAX_COLUMNS = 4;
+            //         THESAURUS_MAX_ITEMS_PER_PAGE = 80;
+            //     } else {
+            //         THESAURUS_MAX_COLUMNS = 5;
+            //         THESAURUS_MAX_ITEMS_PER_PAGE = 100;
+            //     }
             
-            refreshThes();
-            if  ($(location).prop('hash') == "#patterns") {
-                showDocs();
-            }
+            // refreshThes();
+            // if  ($(location).prop('hash') == "#patterns") {
+            //     showDocs();
+            // }
             
-            window.addEventListener('popstate', function() {refreshThes();});
-            });
+            // window.addEventListener('popstate', function() {refreshThes();});
+            // });
         </script>
 
         <script src="wordhunt.js"></script>

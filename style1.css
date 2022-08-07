@@ -358,7 +358,7 @@ ul.ui-autocomplete.ui-menu li:last-child {
     cursor: pointer;
     border: 1px solid grey;
 }
-#thes_doc {
+#thes_doc, #about-us {
     display: none;
 }
 #viz-teaser-button {
